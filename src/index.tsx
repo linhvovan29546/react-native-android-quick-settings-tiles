@@ -16,9 +16,9 @@ const quickSettings = AndroidQuickSettingsTiles
     }
   );
 class RNQuickSettings {
-  requestPermission = (): Promise<any> => {
+  request = (): Promise<any> => {
     console.log('start js native module0')
-    return quickSettings.requestPermission()
+    return quickSettings.request()
   }
 }
 export default new RNQuickSettings();

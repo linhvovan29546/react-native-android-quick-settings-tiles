@@ -1,4 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.reactnativeandroidquicksettingstiles">
+    package="com.reactnativeandroidquicksettingstiles" >
+
+    <application>
+        <service
+            android:name=".QSIntentService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".QSDialogService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".QuickSettingsService"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
 
 </manifest>

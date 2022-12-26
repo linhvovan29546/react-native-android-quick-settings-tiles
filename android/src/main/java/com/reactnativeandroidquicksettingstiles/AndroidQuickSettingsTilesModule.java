@@ -41,7 +41,7 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     // See https://reactnative.dev/docs/native-modules-android
     @SuppressLint("LongLogTag")
     @ReactMethod
-    public void requestPermission(Promise promise) {
+    public void request(Promise promise) {
       Log.d(NAME, "start native");
       WritableMap params = Arguments.createMap();
       StatusBarManager statusBarService = null;
@@ -50,9 +50,18 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
         Context context=getAppContext();
         statusBarService = context.getSystemService(StatusBarManager.class);
         if (Build.VERSION.SDK_INT == 33) {
+//          ComponentName componentName = new ComponentName(
+//            context,
+//            QuickSettingsService.class.getName());
+
+//          ComponentName componentName = new ComponentName(
+//            context,
+//            QSDialogService.class.getName());
+
           ComponentName componentName = new ComponentName(
             context,
-            "Test App");
+            QSIntentService.class.getName());
+
           IconCompat icon =
             IconCompat.createWithResource(context,
               this.getResourceIdForResourceName(context,"ic_launcher_round"));
