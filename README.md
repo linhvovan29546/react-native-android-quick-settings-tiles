@@ -1,6 +1,6 @@
 # react-native-android-quick-settings-tiles
 
-Create custom Quick Settings tiles for your app
+Create custom Quick Settings tiles for your app [detail](https://developer.android.com/develop/ui/views/quicksettings-tiles)
 
 ## Installation
 
