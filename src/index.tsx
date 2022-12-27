@@ -18,6 +18,7 @@ const quickSettings = AndroidQuickSettingsTiles
 interface optionRequest{
   quickLabel:string;
   isDialog?:boolean;
+  icon:string;
 }
 class RNQuickSettings {
   request = (option:optionRequest): Promise<any> => {

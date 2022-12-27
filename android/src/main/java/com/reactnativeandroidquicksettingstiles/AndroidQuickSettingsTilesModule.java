@@ -50,6 +50,7 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     public void request(ReadableMap options, Promise promise) {
       WritableMap params = Arguments.createMap();
       String quickLabel=options.getString("quickLabel");
+      String iconName=options.getString("icon");
       boolean isDialog=false;
       if(options.hasKey("isDialog")){
         isDialog=options.getBoolean("isDialog");
@@ -63,7 +64,7 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
             isDialog ? QSDialogService.class.getName(): QSIntentService.class.getName());
           IconCompat icon =
             IconCompat.createWithResource(context,
-              this.getResourceIdForResourceName(context,"ic_launcher_round"));
+              this.getResourceIdForResourceName(context,iconName));
           statusBarService.requestAddTileService(
             componentName, quickLabel,icon.toIcon(context),
             MoreExecutors.directExecutor(), integer -> {
