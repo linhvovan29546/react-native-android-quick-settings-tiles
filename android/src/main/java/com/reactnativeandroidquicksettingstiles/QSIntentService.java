@@ -50,25 +50,14 @@ public class QSIntentService extends TileService {
     boolean isCurrentlyLocked = false;
       isCurrentlyLocked = this.isLocked();
     if (!isCurrentlyLocked) {
-      Resources resources = getApplication().getResources();
       Tile  tile = getQsTile();
-      String tileLabel = tile.getLabel().toString();
-      String tileState = null;
         if(tile.getState() == Tile.STATE_ACTIVE){
-          tileState=resources.getString(R.string.service_inactive);
           updateTile(false);
         }else{
-          tileState=  resources.getString(R.string.service_active);
           updateTile(true);
         }
-      String packageName = this.getApplicationContext().getPackageName();
-      Intent intent = this.getPackageManager().getLaunchIntentForPackage(packageName).cloneFilter();
-      intent.putExtra(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_NAME_KEY,
-        tileLabel);
-      intent.putExtra(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_INFO_KEY,
-        tileState);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivityAndCollapse(intent);
+      Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(tile,false);
+      startActivityAndCollapse(intent);
     }
   }
   private void updateTile(boolean isActive) {

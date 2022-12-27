@@ -48,6 +48,7 @@ public class QSDialogService
     QSDialog.Builder dialogBuilder =
       new QSDialog.Builder(getApplicationContext());
 
+    Tile finalTile = tile;
     QSDialog dialog = dialogBuilder
       .setClickListener(new QSDialog.QSDialogListener() {
         @Override
@@ -56,6 +57,8 @@ public class QSDialogService
           // The user wants to change the tile state.
           isTileActive = !isTileActive;
           updateTile();
+          Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(finalTile,true);
+          startActivityAndCollapse(intent);
         }
 
         @Override
