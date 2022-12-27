@@ -2,6 +2,17 @@
 
 Create custom Quick Settings tiles for your app
 
+## Screenshot
+
+<table>
+  <tr>
+    <td><p align="center"><img src="/docs/1.JPEG" height="500"></p></td>
+ <td><p align="center"><img src="/docs/2.JPEG" height="500"></p></td>
+  <td><p align="center"><img src="/docs/3.JPEG" height="500"></p></td>
+
+  </tr>
+</table>
+
 ## Installation
 
 ```sh
