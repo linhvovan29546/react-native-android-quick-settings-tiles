@@ -7,7 +7,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={async ()=>{
-        const result=await RNQuickSettings.requestPermission()
+        const result=await RNQuickSettings.request({
+          isDialog:true,
+          quickLabel:"QuicktestLabel"
+        })
         console.log('result',result)
       }}>
       <Text>Request</Text>

@@ -1,8 +1,13 @@
 package com.example.reactnativeandroidquicksettingstiles;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.reactnativeandroidquicksettingstiles.AndroidQuickSettingsTilesModule;
 
 public class MainActivity extends ReactActivity {
 
@@ -36,5 +41,11 @@ public class MainActivity extends ReactActivity {
       reactRootView.setIsFabric(BuildConfig.IS_NEW_ARCHITECTURE_ENABLED);
       return reactRootView;
     }
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    AndroidQuickSettingsTilesModule.onNewIntent(intent);
   }
 }

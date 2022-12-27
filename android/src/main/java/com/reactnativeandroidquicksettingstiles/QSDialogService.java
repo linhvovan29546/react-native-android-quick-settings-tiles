@@ -2,6 +2,7 @@ package com.reactnativeandroidquicksettingstiles;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.IBinder;
 
@@ -21,10 +22,20 @@ public class QSDialogService
   extends TileService {
 
   private boolean isTileActive;
-
+  @Override
+  public void onTileAdded() {
+    super.onTileAdded();
+    //set active when add tile
+    Resources resources = getApplication().getResources();
+    boolean initialValue=resources.getBoolean(R.bool.qs_dialog_default);
+    Tile tile = super.getQsTile();
+    int activeState = initialValue ?
+      Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
+    tile.setState(activeState);
+    tile.updateTile();
+  }
   @Override
   public void onClick(){
-
     // Get the tile's current state.
     Tile tile = null;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -42,7 +53,6 @@ public class QSDialogService
         @Override
         public void onDialogPositiveClick(DialogFragment dialog) {
           Log.d("QS", "Positive registed");
-
           // The user wants to change the tile state.
           isTileActive = !isTileActive;
           updateTile();
@@ -67,12 +77,10 @@ public class QSDialogService
       this.showDialog(dialog.onCreateDialog(args));
     }
   }
-
   private void updateTile() {
     Tile tile = super.getQsTile();
     int activeState = isTileActive ?
       Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
-
     tile.setState(activeState);
     tile.updateTile();
   }

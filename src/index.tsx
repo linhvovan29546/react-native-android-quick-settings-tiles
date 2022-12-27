@@ -15,10 +15,14 @@ const quickSettings = AndroidQuickSettingsTiles
       },
     }
   );
+interface optionRequest{
+  quickLabel:string;
+  isDialog?:boolean;
+}
 class RNQuickSettings {
-  request = (): Promise<any> => {
+  request = (option:optionRequest): Promise<any> => {
     console.log('start js native module0')
-    return quickSettings.request()
+    return quickSettings.request(option)
   }
 }
 export default new RNQuickSettings();

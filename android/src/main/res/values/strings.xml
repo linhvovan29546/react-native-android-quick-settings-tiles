@@ -23,8 +23,7 @@
   <string name="qs_dialog_cancel">Cancel</string>
 
   <string name="qs_intent_tile_label">QS Intent Launcher</string>
-
-  <string name="result_label">Quick Settings Result Activity</string>
-  <string name="result_output">The %1$s tile is %2$s.</string>
-  <string name="result_return">Return to home</string>
+<!--  value init  -->
+  <bool name="qs_dialog_default">true</bool>
+  <bool name="qs_intent_default">true</bool>
 </resources>

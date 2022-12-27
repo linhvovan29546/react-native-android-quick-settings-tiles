@@ -2,9 +2,13 @@ package com.reactnativeandroidquicksettingstiles;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.service.quicksettings.TileService;
 
+import androidx.annotation.RequiresApi;
+
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class QuickSettingsService extends TileService {
 
   // Called when the user adds your tile.
