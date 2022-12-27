@@ -14,7 +14,7 @@ export default function App() {
       <TouchableOpacity onPress={async ()=>{
         const result=await RNQuickSettings.request({
           isDialog:true,
-          quickLabel:"QuicktestLabel",
+          quickLabel:"QS Dialog Launcher",
           icon:"ic_launcher_round"
         })
         console.log('result',result)
