@@ -1,7 +1,7 @@
 {
-  "name": "react-native-test",
+  "name": "react-native-android-quick-settings-tiles",
   "version": "0.1.0",
-  "description": "test",
+  "description": "Create custom Quick Settings tiles for your app",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",

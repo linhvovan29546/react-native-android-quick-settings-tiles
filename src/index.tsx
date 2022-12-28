@@ -48,7 +48,8 @@ class RNQuickSettings {
     this._quickSettingsEventHandlers = new Map();
   }
 
-  request = (option:optionRequest): Promise<resultRequest> => {
+  request = (option:optionRequest): Promise<resultRequest|null> => {
+    if (!isAndroid) return Promise.resolve(null)
     return quickSettings.request(option)
   }
   
@@ -78,7 +79,8 @@ class RNQuickSettings {
     listener.remove();
     this._quickSettingsEventHandlers.delete(type);
   };
-  getLastChanged=():Promise<resultChanged>=>{
+  getLastChanged=():Promise<resultChanged|null>=>{
+    if (!isAndroid) return Promise.resolve(null)
     return quickSettings.getLastChanged()
   }
 }
