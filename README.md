@@ -38,6 +38,19 @@ Create custom Quick Settings tiles for your app [info](https://developer.android
 npm install react-native-android-quick-settings-tiles
 ```
 ### Addition installation step
+In `MainActivity.java`
+```java
+  @Override
+  protected void onStart() {
+    super.onStart();
+    AndroidQuickSettingsTilesModule.startSession(getIntent()); //add line
+  }
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    AndroidQuickSettingsTilesModule.onNewIntent(intent);  //add line
+  }
+```
 In `AndroidManifest.xml`:
 ```java
 // ...
@@ -68,13 +81,19 @@ In `AndroidManifest.xml`:
 In `res/values/strings`:(optional)
 
 ```java
+    <string name="app_name">AndroidQuickSettingsTiles Example</string>
   <string name="tile_label">Quick Settings Sample</string>
+
   <string name="qs_dialog_tile_label">QS Dialog Launcher</string>
   <string name="qs_dialog_prompt">Change the tile state?</string>
   <string name="qs_dialog_active">Turn off</string>
   <string name="qs_dialog_inactive">Turn on</string>
   <string name="qs_dialog_cancel">Cancel</string>
+
   <string name="qs_intent_tile_label">QS Intent Launcher</string>
+<!--  value init  -->
+  <bool name="qs_dialog_default">true</bool>
+  <bool name="qs_intent_default">true</bool>
 ```
 
 In `res/values/color`: (optional)
@@ -105,11 +124,20 @@ In `res/values/styles`:(optional)
 ```js
 import RNQuickSettings from "react-native-android-quick-settings-";
 
-        const result=await RNQuickSettings.request({
-          isDialog:true,
-          quickLabel:"QS Dialog Launcher", //same with label in manifest
-          icon:"more"
-        })
+  React.useEffect(()=>{
+    const get=async ()=>{
+     const data=await RNQuickSettings.getLastChanged()
+     console.log('data',data)
+     if(data){
+      Alert.alert("Alert","Get latest")
+     }
+     RNQuickSettings.addEventListener("onChange",(payload)=>{
+      console.log('payload',payload)
+      Alert.alert("Alert","Tile changed")
+    })
+    }
+    get()
+  },[])
 
 ```
 ## Request to add tile
@@ -123,9 +151,20 @@ function request(option:optionRequest): Promise<resultRequest>;
           icon:"more"
         })
 ```
+## getLastChanged 
+   When change a tile from quicksettings has triggered the application to open from a quit state,
+     * this method will return a `resultChanged` containing the tile data, or `null` if
+     * the app was opened via another method.
+```ts
+function getLastChanged(option:optionRequest): Promise<resultChanged>;
+```
+```js
+   const data=await RNQuickSettings.getLastChanged()
+```
+
 ## event listener
 ```ts
-function addEventListener(option:optionRequest,handler: any);
+function addEventListener(option:optionRequest,handler(payload:resultChanged): =>void);
 ```
 ```js
     RNQuickSettings.addEventListener("onChange",(payload)=>{

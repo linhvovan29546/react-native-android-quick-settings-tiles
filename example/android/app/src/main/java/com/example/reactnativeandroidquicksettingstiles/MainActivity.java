@@ -42,10 +42,14 @@ public class MainActivity extends ReactActivity {
       return reactRootView;
     }
   }
-
+  @Override
+  protected void onStart() {
+    super.onStart();
+    AndroidQuickSettingsTilesModule.startSession(getIntent()); //add line
+  }
   @Override
   public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
-    AndroidQuickSettingsTilesModule.onNewIntent(intent);
+    AndroidQuickSettingsTilesModule.onNewIntent(intent);  //add line
   }
 }

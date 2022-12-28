@@ -33,6 +33,15 @@ type resultRequest={
   type:resultType;
   code?:number;
 }
+enum stateChanged{
+  ACTITVE='active',
+  INACTIVE='inactive'
+}
+interface resultChanged{
+  state:stateChanged;
+  label:string;
+  isDialog:string;
+}
 class RNQuickSettings {
   private _quickSettingsEventHandlers;
   constructor() {
@@ -49,7 +58,7 @@ class RNQuickSettings {
     if (type === 'onChange') {
       listener = eventEmitter.addListener(
         "onChange",
-        (eventPayload: any) => {
+        (eventPayload: resultChanged) => {
           handler(eventPayload);
         }
       );
@@ -69,5 +78,8 @@ class RNQuickSettings {
     listener.remove();
     this._quickSettingsEventHandlers.delete(type);
   };
+  getLastChanged=():Promise<resultChanged>=>{
+    return quickSettings.getLastChanged()
+  }
 }
 export default new RNQuickSettings();

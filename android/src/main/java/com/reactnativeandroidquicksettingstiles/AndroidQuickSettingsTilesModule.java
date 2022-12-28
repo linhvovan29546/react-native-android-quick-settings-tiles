@@ -34,6 +34,8 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     public static final String NAME = "AndroidQuickSettingsTiles";
     public static final String RESULT_ACTIVITY_INFO_KEY = "state";
     public static final String RESULT_ACTIVITY_NAME_KEY = "label";
+    public static final String ACTIVE = "active";
+    public static final String INACTIVE = "inactive";
     public static final String UNAVAILABLE = "unavailable";
     public static final String GRANTED = "granted";
     private static Bundle bundleData=null;
@@ -88,14 +90,15 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
 
     }
   @ReactMethod
-  public void getLastChanged(Promise promise) {
-    WritableMap params = Arguments.createMap();
-      if(bundleData!= null){
+    public void getLastChanged(Promise promise) {
+      if(bundleData != null){
+        WritableMap params = Arguments.createMap();
         params.putString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_NAME_KEY, bundleData.getString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_NAME_KEY,""));
         params.putString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_INFO_KEY,  bundleData.getString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_INFO_KEY,""));
         params.putBoolean("isDialog", bundleData.getBoolean("isDialog",false));
+        promise.resolve(params);
       }
-    promise.resolve(params);
+      promise.resolve(null);
   }
   private int getResourceIdForResourceName(Context context, String resourceName) {
     int resourceId = context.getResources().getIdentifier(resourceName, "drawable", context.getPackageName());
@@ -104,11 +107,16 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     }
     return resourceId;
   }
+  public static void startSession(@Nonnull Intent intent) {
+    Bundle bundle = intent.getExtras();
+    bundleData=bundle;
+  }
   public static void onNewIntent(@Nonnull Intent intent) {
     Bundle bundle = intent.getExtras();
     bundleData=bundle;
     WritableMap params = Arguments.createMap();
-    if(bundleData!= null){
+    if(bundleData != null){
+      Log.d("onNewIntent", "onNewIntent1111111");
       params.putString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_NAME_KEY, bundleData.getString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_NAME_KEY,""));
       params.putString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_INFO_KEY,  bundleData.getString(AndroidQuickSettingsTilesModule.RESULT_ACTIVITY_INFO_KEY,""));
       params.putBoolean("isDialog", bundleData.getBoolean("isDialog",false));
@@ -116,15 +124,13 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     sendEventToJs("onChange",params);
   }
   @RequiresApi(api = Build.VERSION_CODES.N)
-  public static Intent convertTileToIntent(Tile tile,boolean isDialog){
-    Context context=getAppContext();
-    Resources resources = context.getResources();
+  public static @Nullable Intent convertTileToIntent(Context context, Tile tile,boolean isDialog){
     String tileLabel = tile.getLabel().toString();
     String tileState = null;
       if(tile.getState() == Tile.STATE_ACTIVE){
-        tileState="active";
+        tileState=ACTIVE;
       }else{
-        tileState="inactive";
+        tileState=INACTIVE;
       }
     String packageName = context.getPackageName();
     Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName).cloneFilter();

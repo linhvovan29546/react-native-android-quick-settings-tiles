@@ -56,7 +56,7 @@ public class QSIntentService extends TileService {
         }else{
           updateTile(true);
         }
-      Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(tile,false);
+      Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(getApplicationContext(),tile,false);
       startActivityAndCollapse(intent);
     }
   }

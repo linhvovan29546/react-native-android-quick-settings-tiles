@@ -57,7 +57,7 @@ public class QSDialogService
           // The user wants to change the tile state.
           isTileActive = !isTileActive;
           updateTile();
-          Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(finalTile,true);
+          Intent intent=AndroidQuickSettingsTilesModule.convertTileToIntent(getApplicationContext(),finalTile,true);
           startActivityAndCollapse(intent);
         }
 
