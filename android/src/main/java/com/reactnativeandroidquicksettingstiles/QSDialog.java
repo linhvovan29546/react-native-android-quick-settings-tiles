@@ -73,7 +73,7 @@ public class QSDialog
 
       // OnAttach doesn't get called on the dialog;
       // we have to apply our click event handlers here.
-      .setNegativeButton("Cancel",
+      .setNegativeButton(R.string.qs_dialog_cancel,
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {

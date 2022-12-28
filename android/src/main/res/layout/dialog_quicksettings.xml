@@ -7,13 +7,13 @@
   <TextView
     style="@style/HeadingFont"
     android:text="@string/qs_dialog_tile_label"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryDialog"
     android:layout_marginTop="0sp"
     android:padding="16sp"/>
 
   <TextView
     style="@style/BodyFont"
     android:text="@string/qs_dialog_prompt"
-    android:textColor="@color/colorPrimaryDark"/>
+    android:textColor="@color/colorPrimaryDarkDialog"/>
 
 </LinearLayout>

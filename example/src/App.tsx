@@ -5,21 +5,30 @@ import RNQuickSettings from '../../src/index';
 
 export default function App() {
   React.useEffect(()=>{
-    RNQuickSettings.addEventListener("onChange",(s)=>{
-    console.log('ssssssss',s)
+    RNQuickSettings.addEventListener("onChange",(payload)=>{
     })
   },[])
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={async ()=>{
-        const result=await RNQuickSettings.request({
-          isDialog:true,
-          quickLabel:"QS Dialog Launcher",
-          icon:"ic_launcher_round"
-        })
-        console.log('result',result)
+          const result=await RNQuickSettings.request({
+            isDialog:true,
+            quickLabel:"QS Dialog Launcher",
+            icon:"more"
+          })
+          console.log('result',result)
       }}>
-      <Text>Request</Text>
+      <Text>Request QS Dialog Launcher</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={async ()=>{
+          const result=await RNQuickSettings.request({
+            isDialog:false,
+            quickLabel:"QS Intent Launcher",
+            icon:"other"
+          })
+          console.log('result',result)
+      }}>
+      <Text>Request QS Intent Launcher</Text>
       </TouchableOpacity>
     </View>
   );

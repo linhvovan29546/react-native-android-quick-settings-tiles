@@ -25,16 +25,25 @@ interface optionRequest{
   isDialog?:boolean;
   icon:string;
 }
+enum resultType{
+  UNAVAILABLE="UNAVAILABLE",
+  GRANTED="GRANTED"
+}
+type resultRequest={
+  type:resultType;
+  code?:number;
+}
 class RNQuickSettings {
   private _quickSettingsEventHandlers;
   constructor() {
     this._quickSettingsEventHandlers = new Map();
   }
-  request = (option:optionRequest): Promise<any> => {
-    console.log('start js native module0')
+
+  request = (option:optionRequest): Promise<resultRequest> => {
     return quickSettings.request(option)
   }
-  addEventListener = (type: any, handler: any) => {
+  
+  addEventListener = (type: string, handler: any) => {
     if (!isAndroid) return
     let listener;
     if (type === 'onChange') {

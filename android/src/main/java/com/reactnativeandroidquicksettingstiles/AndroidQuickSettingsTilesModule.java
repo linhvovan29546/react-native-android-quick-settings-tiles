@@ -32,8 +32,10 @@ import javax.annotation.Nonnull;
 @ReactModule(name = AndroidQuickSettingsTilesModule.NAME)
 public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule {
     public static final String NAME = "AndroidQuickSettingsTiles";
-    public static final String RESULT_ACTIVITY_INFO_KEY = "resultActivityInfo";
-    public static final String RESULT_ACTIVITY_NAME_KEY = "resultActivityName";
+    public static final String RESULT_ACTIVITY_INFO_KEY = "state";
+    public static final String RESULT_ACTIVITY_NAME_KEY = "label";
+    public static final String UNAVAILABLE = "unavailable";
+    public static final String GRANTED = "granted";
     private static Bundle bundleData=null;
   public static ReactApplicationContext context;
     public AndroidQuickSettingsTilesModule(ReactApplicationContext reactContext) {
@@ -75,12 +77,13 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
           statusBarService.requestAddTileService(
             componentName, quickLabel,icon.toIcon(context),
             MoreExecutors.directExecutor(), integer -> {
-              params.putInt("integer",integer);
+              params.putString("type",GRANTED);
+              params.putInt("code",integer);
               promise.resolve(params);
             });
         } else {
-          params.putString("message","Request to add tile for user is not supported");
-          promise.reject("error",params);
+          params.putString("type",UNAVAILABLE);
+          promise.resolve(params);
         }
 
     }
@@ -119,9 +122,9 @@ public class AndroidQuickSettingsTilesModule extends ReactContextBaseJavaModule 
     String tileLabel = tile.getLabel().toString();
     String tileState = null;
       if(tile.getState() == Tile.STATE_ACTIVE){
-        tileState=resources.getString(R.string.service_active);
+        tileState="active";
       }else{
-        tileState=  resources.getString(R.string.service_inactive);
+        tileState="inactive";
       }
     String packageName = context.getPackageName();
     Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName).cloneFilter();
